@@ -11,6 +11,7 @@ pool:
  
 variables:
   ImageName: 'meezanmallick1610/myapp:$(Build.BuildId)'
+  ImageName1: 'meezanmallick1610/myapp:latest'
  
 stages:
 - stage: Build
@@ -26,7 +27,7 @@ stages:
         dockerRegistryEndpoint: 'Docker Hub cred'
         command: 'Build an image'
         dockerFile: 'Dockerfile'
-        imageName: '$(ImageName)'
+        imageName: '$(ImageName) $(ImageName1)'
         includeLatestTag: true
         useDefaultContext: false
         buildContext: '.'
@@ -37,5 +38,5 @@ stages:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Docker Hub cred'
         command: 'Push an image'
-        imageName: '$(ImageName)'
+        imageName: '$(ImageName) $(ImageName1)'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
